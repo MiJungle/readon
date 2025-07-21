@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   FormContainer,
@@ -15,8 +16,6 @@ interface BookFormData {
   status: string;
   startDate: string;
   endDate: string;
-  isbn?: string;
-  genre?: string;
 }
 
 export default function Step1Form() {
@@ -40,6 +39,7 @@ export default function Step1Form() {
   };
 
   const watchedStatus = watch("status");
+  const watchedStartDate = watch("startDate");
 
   return (
     <FormContainer>
@@ -99,26 +99,62 @@ export default function Step1Form() {
           />
           {errors.status && <ErrorText>{errors.status.message}</ErrorText>}
         </FormGroup>
+        {["reading", "paused", "completed"].includes(watchedStatus) && (
+          <>
+            <FormGroup>
+              <Label>시작일</Label>
+              <Controller
+                name="startDate"
+                control={control}
+                rules={{
+                  required: "시작일을 입력해주세요",
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="date"
+                    className={errors.endDate ? "error" : ""}
+                  />
+                )}
+              />
+              {errors.startDate && (
+                <ErrorText>{errors.startDate.message}</ErrorText>
+              )}
+            </FormGroup>
 
-        <>
-          <FormGroup>
-            <Label>시작일</Label>
-            <Controller
-              name="startDate"
-              control={control}
-              render={({ field }) => <Input {...field} type="date" />}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label>종료일</Label>
-            <Controller
-              name="endDate"
-              control={control}
-              render={({ field }) => <Input {...field} type="date" />}
-            />
-          </FormGroup>
-        </>
+            {watchedStatus === "completed" && (
+              <FormGroup>
+                <Label>종료일</Label>
+                <Controller
+                  name="endDate"
+                  control={control}
+                  rules={{
+                    required: "종료일을 입력해주세요",
+                    validate: (end: string) => {
+                      if (!watchedStartDate || !end) return true;
+                      const startDate = new Date(watchedStartDate);
+                      const endDate = new Date(end);
+                      return (
+                        startDate <= endDate ||
+                        "종료일은 시작일보다 이전일 수 없습니다."
+                      );
+                    },
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      type="date"
+                      className={errors.endDate ? "error" : ""}
+                    />
+                  )}
+                />
+                {errors.endDate && (
+                  <ErrorText>{errors.endDate.message}</ErrorText>
+                )}
+              </FormGroup>
+            )}
+          </>
+        )}
 
         <SubmitButton type="submit" disabled={isSubmitting}>
           {isSubmitting ? "저장 중..." : "다음 단계"}

@@ -61,6 +61,9 @@ export const Select = styled.select`
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
+  &.error {
+    border-color: #ef4444;
+  }
 `;
 
 export const ErrorText = styled.span`
@@ -90,4 +93,3 @@ export const SubmitButton = styled.button`
     cursor: not-allowed;
   }
 `;
-
