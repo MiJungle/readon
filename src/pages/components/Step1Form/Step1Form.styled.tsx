@@ -1,16 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
 import styled from "@emotion/styled";
 
-interface BookFormData {
-  title: string;
-  author: string;
-  status: string;
-  startDate: string;
-  endDate: string;
-  isbn?: string;
-  genre?: string;
-}
-
 export const FormContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;

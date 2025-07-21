@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { bookFormDataAtom, BookFormData } from "@/atoms/bookFormData";
 import {
   FormContainer,
   FormGroup,
@@ -11,17 +12,8 @@ import {
   ErrorText,
 } from "./Step1Form.styled";
 
-interface BookFormData {
-  title: string;
-  author: string;
-  status: string;
-  startDate: string;
-  endDate: string;
-}
-
 export default function Step1Form() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const [bookFormData, setBookFormData] = useAtom(bookFormDataAtom);
 
   const {
     control,
@@ -40,22 +32,17 @@ export default function Step1Form() {
   });
 
   useEffect(() => {
-    const newValues: BookFormData = {
-      title: searchParams.get("title") ?? "",
-      author: searchParams.get("author") ?? "",
-      status: searchParams.get("status") ?? "",
-      startDate: searchParams.get("startDate") ?? "",
-      endDate: searchParams.get("endDate") ?? "",
-    };
-    reset(newValues);
-  }, [searchParams, reset]);
+    reset({
+      title: bookFormData.title ?? "",
+      author: bookFormData.author ?? "",
+      status: bookFormData.status ?? "",
+      startDate: bookFormData.startDate ?? "",
+      endDate: bookFormData.endDate ?? "",
+    });
+  }, [bookFormData, reset]);
 
   const onSubmit = (data: BookFormData) => {
-    const params = new URLSearchParams();
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) params.set(key, value.toString());
-    });
-    router.push(`?${params.toString()}`);
+    setBookFormData(data);
     console.log("폼 데이터:", data);
   };
 
