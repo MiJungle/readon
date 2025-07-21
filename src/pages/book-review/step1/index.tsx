@@ -1,5 +1,5 @@
-import StepIndicator from "@/pages/components/StepIndicator";
-import Step1Form from "@/pages/components/Step1Form";
+import StepIndicator from "@/components/StepIndicator";
+import Step1Form from "@/components/Step1Form";
 
 export default function BookReviewStep1() {
     return (

@@ -56,3 +56,4 @@ export const StepNumber = styled.div<{ isActive?: boolean; isCurrent?: boolean }
     props.isCurrent ? '0 0 0 4px rgba(59, 130, 246, 0.2)' : 'none'
   };
 `;
+
