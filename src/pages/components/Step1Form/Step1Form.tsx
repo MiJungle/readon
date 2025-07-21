@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   FormContainer,
   FormGroup,
@@ -19,11 +20,15 @@ interface BookFormData {
 }
 
 export default function Step1Form() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
+    reset,
   } = useForm<BookFormData>({
     defaultValues: {
       title: "",
@@ -34,7 +39,23 @@ export default function Step1Form() {
     },
   });
 
+  useEffect(() => {
+    const newValues: BookFormData = {
+      title: searchParams.get("title") ?? "",
+      author: searchParams.get("author") ?? "",
+      status: searchParams.get("status") ?? "",
+      startDate: searchParams.get("startDate") ?? "",
+      endDate: searchParams.get("endDate") ?? "",
+    };
+    reset(newValues);
+  }, [searchParams, reset]);
+
   const onSubmit = (data: BookFormData) => {
+    const params = new URLSearchParams();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) params.set(key, value.toString());
+    });
+    router.push(`?${params.toString()}`);
     console.log("폼 데이터:", data);
   };
 
