@@ -1,40 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# ReadOn - Multi Step Form
 
-## Getting Started
+이 프로젝트는 Next.js와 TypeScript, Jotai, React Hook Form을 활용한 **도서 리뷰 작성 웹앱**입니다.  
+사용자는 단계별 폼을 통해 도서 정보를 입력하고, 리뷰를 작성할 수 있습니다.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠️ 기술 스택
+
+- **Next.js** (Page Router)
+- **TypeScript**
+- **Jotai** (상태 관리, localStorage 연동)
+- **React Hook Form** (폼 관리 및 검증)
+- **Emotion** (스타일링)
+
+---
+
+## 📁 주요 폴더 구조
+
+```
+src/
+  components/
+    Step1Form/
+    Step2Form/
+    StepIndicator/
+  atoms/
+    bookFormData.ts
+  pages/
+    book-review/
+      [step].tsx
+    index.tsx
+  styles/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🚀 실행 방법
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+1. **패키지 설치**
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   # 또는
+   yarn install
+   ```
 
-## Learn More
+2. **개발 서버 실행**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm run dev
+   # 또는
+   yarn dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+3. **브라우저에서 접속**
+   ```
+   http://localhost:3000
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📝 주요 기능
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `/book-review/step-1` : 도서 기본 정보 입력
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+
+각 단계는 URL로 직접 접근하거나, StepIndicator를 통해 이동할 수 있습니다.
+
+---
+
+## 🗂️ 상태 관리 및 데이터 저장
+
+- **Jotai**의 `atomWithStorage`를 사용하여 폼 데이터가 localStorage에 자동 저장됩니다.
+- 새로고침/브라우저 재접속 시에도 입력값이 유지됩니다.
+
+
+---
