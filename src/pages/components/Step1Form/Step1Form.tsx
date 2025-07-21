@@ -28,6 +28,7 @@ export default function Step1Form() {
       status: "",
       startDate: "",
       endDate: "",
+      publishDate: "",
     },
   });
 
@@ -38,6 +39,7 @@ export default function Step1Form() {
       status: bookFormData.status ?? "",
       startDate: bookFormData.startDate ?? "",
       endDate: bookFormData.endDate ?? "",
+      publishDate: bookFormData.publishDate ?? "",
     });
   }, [bookFormData, reset]);
 
@@ -47,6 +49,7 @@ export default function Step1Form() {
   };
 
   const watchedStatus = watch("status");
+  const watchedPublishDate = watch("publishDate");
   const watchedStartDate = watch("startDate");
 
   return (
@@ -90,6 +93,27 @@ export default function Step1Form() {
         </FormGroup>
 
         <FormGroup>
+          <Label>출판일 *</Label>
+          <Controller
+            name="publishDate"
+            control={control}
+            rules={{
+              required: "출판일을 입력해주세요",
+            }}
+            render={({ field }) => (
+              <Input
+                {...field}
+                type="date"
+                className={errors.publishDate ? "error" : ""}
+              />
+            )}
+          />
+          {errors.publishDate && (
+            <ErrorText>{errors.publishDate.message}</ErrorText>
+          )}
+        </FormGroup>
+
+        <FormGroup>
           <Label>독서 상태 *</Label>
           <Controller
             name="status"
@@ -107,6 +131,7 @@ export default function Step1Form() {
           />
           {errors.status && <ErrorText>{errors.status.message}</ErrorText>}
         </FormGroup>
+
         {["reading", "paused", "completed"].includes(watchedStatus) && (
           <>
             <FormGroup>
@@ -116,12 +141,21 @@ export default function Step1Form() {
                 control={control}
                 rules={{
                   required: "시작일을 입력해주세요",
+                  validate: (start: string) => {
+                    if (!watchedPublishDate || !start) return true;
+                    const publishDate = new Date(watchedPublishDate);
+                    const startDate = new Date(start);
+                    return (
+                      startDate >= publishDate ||
+                      "시작일은 출판일 보다 이전일 수 없습니다."
+                    );
+                  },
                 }}
                 render={({ field }) => (
                   <Input
                     {...field}
                     type="date"
-                    className={errors.endDate ? "error" : ""}
+                    className={errors.startDate ? "error" : ""}
                   />
                 )}
               />
