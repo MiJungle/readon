@@ -7,6 +7,8 @@ export interface BookFormData {
   startDate: string;
   endDate: string;
   publishDate: string;
+  recommend: string;
+  rating: string;
 }
 
 export const bookFormDataAtom = atomWithStorage<BookFormData>("bookFormData", {
@@ -16,4 +18,6 @@ export const bookFormDataAtom = atomWithStorage<BookFormData>("bookFormData", {
   startDate: "",
   endDate: "",
   publishDate: "",
+  recommend: "",
+  rating: "",
 });
