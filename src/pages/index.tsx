@@ -5,7 +5,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/book-review/step1");
+    router.push("/book-review/step-1");
   }, [router]);
 
   return null;
