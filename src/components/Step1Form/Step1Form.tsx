@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { useAtom } from "jotai";
-import { bookFormDataAtom, BookFormData } from "@/atoms/bookFormData";
+import { bookFormDataAtom } from "@/atoms/bookFormData";
 import {
   FormContainer,
   FormGroup,
@@ -13,24 +13,13 @@ import {
 } from "./Step1Form.styled";
 
 export default function Step1Form() {
-  const [bookFormData, setBookFormData] = useAtom(bookFormDataAtom);
-
+  const [bookFormData] = useAtom(bookFormDataAtom);
   const {
     control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     watch,
     reset,
-  } = useForm<BookFormData>({
-    defaultValues: {
-      title: "",
-      author: "",
-      status: "",
-      startDate: "",
-      endDate: "",
-      publishDate: "",
-    },
-  });
+  } = useFormContext();
 
   useEffect(() => {
     reset({
@@ -43,11 +32,6 @@ export default function Step1Form() {
     });
   }, [bookFormData, reset]);
 
-  const onSubmit = (data: BookFormData) => {
-    setBookFormData(data);
-    console.log("폼 데이터:", data);
-  };
-
   const watchedStatus = watch("status");
   const watchedPublishDate = watch("publishDate");
   const watchedStartDate = watch("startDate");
@@ -57,7 +41,6 @@ export default function Step1Form() {
       <h1>도서 기본 정보</h1>
       <p>책의 기본 정보를 입력해주세요.</p>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup>
           <Label>도서 제목 *</Label>
           <Controller
@@ -72,7 +55,7 @@ export default function Step1Form() {
               />
             )}
           />
-          {errors.title && <ErrorText>{errors.title.message}</ErrorText>}
+            {errors.title && <ErrorText>{errors.title.message as string}</ErrorText>}
         </FormGroup>
 
         <FormGroup>
@@ -89,7 +72,7 @@ export default function Step1Form() {
               />
             )}
           />
-          {errors.author && <ErrorText>{errors.author.message}</ErrorText>}
+          {errors.author && <ErrorText>{errors.author.message as string}</ErrorText>}
         </FormGroup>
 
         <FormGroup>
@@ -109,7 +92,7 @@ export default function Step1Form() {
             )}
           />
           {errors.publishDate && (
-            <ErrorText>{errors.publishDate.message}</ErrorText>
+            <ErrorText>{errors.publishDate.message as string}</ErrorText>
           )}
         </FormGroup>
 
@@ -129,7 +112,7 @@ export default function Step1Form() {
               </Select>
             )}
           />
-          {errors.status && <ErrorText>{errors.status.message}</ErrorText>}
+          {errors.status && <ErrorText>{errors.status.message as string}</ErrorText>}
         </FormGroup>
 
         {["reading", "paused", "completed"].includes(watchedStatus) && (
@@ -160,7 +143,7 @@ export default function Step1Form() {
                 )}
               />
               {errors.startDate && (
-                <ErrorText>{errors.startDate.message}</ErrorText>
+                <ErrorText>{errors.startDate.message as string}</ErrorText>
               )}
             </FormGroup>
 
@@ -191,17 +174,14 @@ export default function Step1Form() {
                   )}
                 />
                 {errors.endDate && (
-                  <ErrorText>{errors.endDate.message}</ErrorText>
+                  <ErrorText>{errors.endDate.message as string}</ErrorText>
                 )}
               </FormGroup>
             )}
           </>
         )}
 
-        <SubmitButton type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "저장 중..." : "다음 단계"}
-        </SubmitButton>
-      </form>
+
     </FormContainer>
   );
 }
