@@ -62,3 +62,12 @@ export const ErrorText = styled.span`
   margin-top: 0.25rem;
   display: block;
 `;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+`;
