@@ -49,6 +49,13 @@ export default function Step4Form() {
           <Controller
             name="totalPages"
             control={control}
+            rules={{
+              required: "전체 페이지 수를 입력해주세요",
+              min: { value: 1, message: "1페이지 이상이어야 합니다" },
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "숫자만 입력해주세요",
+              },
             }}
             render={({ field }) => (
               <PageInput
@@ -109,6 +116,21 @@ function QuoteFields({ control, errors }: QuoteFieldsProps) {
             <Controller
               name={`quotes.${idx}.page`}
               control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "페이지 번호를 입력해주세요",
+                },
+                min: { value: 1, message: "1페이지 이상이어야 합니다" },
+                max: {
+                  value: totalPages,
+                  message: "최대 페이지 번호를 초과했습니다",
+                },
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "숫자만 입력해주세요",
+                },
+              }}
               render={({ field }) => (
                 <PageInput
                   type="number"
