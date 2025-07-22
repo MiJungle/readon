@@ -8,9 +8,8 @@ import {
   Label,
   Input,
   Select,
-  SubmitButton,
   ErrorText,
-} from "./Step1Form.styled";
+} from "../Form/Form.styled";
 
 export default function Step1Form() {
   const [bookFormData] = useAtom(bookFormDataAtom);

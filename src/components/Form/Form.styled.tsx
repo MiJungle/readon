@@ -8,6 +8,7 @@ export const FormContainer = styled.div`
 
 export const FormGroup = styled.div`
   margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 `;
 
 export const Label = styled.label`
@@ -60,25 +61,4 @@ export const ErrorText = styled.span`
   font-size: 0.875rem;
   margin-top: 0.25rem;
   display: block;
-`;
-
-export const SubmitButton = styled.button`
-  background-color: #3b82f6;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #2563eb;
-  }
-
-  &:disabled {
-    background-color: #9ca3af;
-    cursor: not-allowed;
-  }
 `;
