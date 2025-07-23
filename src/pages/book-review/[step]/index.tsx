@@ -5,8 +5,10 @@ import Step1Form from "@/components/Step1Form";
 import Step2Form from "@/components/Step2Form";
 import Step3Form from "@/components/Step3Form";
 import Step4Form from "@/components/Step4Form";
+import Step5Form from "@/components/Step5Form";
 import NavigationButton from "@/components/NavigationButton";
 import { useAtom } from "jotai";
+import { useResetAtom } from "jotai/utils";
 import { bookFormDataAtom, BookFormData } from "@/atoms/bookFormData";
 import { useForm, FormProvider } from "react-hook-form";
 
@@ -16,7 +18,8 @@ export default function BookReviewStep1() {
   const initialStep = 1;
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [, setBookFormData] = useAtom(bookFormDataAtom);
-
+  const resetBookFormDataAtom = useResetAtom(bookFormDataAtom);
+  
   const methods = useForm<BookFormData>({
     defaultValues: {
       title: "",
@@ -30,6 +33,7 @@ export default function BookReviewStep1() {
       review: "",
       quotes: [],
       totalPages: "",
+      share: "",
     },
   });
 
@@ -50,8 +54,8 @@ export default function BookReviewStep1() {
         return <Step3Form />;
       case "step-4":
         return <Step4Form />;
-      // case "step-5":
-      //   return <Step5Form />;
+      case "step-5":
+        return <Step5Form />;
       default:
         return <Step1Form />;
     }
@@ -62,6 +66,7 @@ export default function BookReviewStep1() {
     2: ["recommend", "rating"],
     3: ["review"],
     4: ["quotes", "totalPages"],
+    5: ["share"],
   };
 
   async function handleNextClick() {
@@ -69,6 +74,13 @@ export default function BookReviewStep1() {
     const isStepValid = await methods.trigger(fieldsToCheck);
 
     if (!isStepValid) return;
+
+    if (currentStep === 5) {
+      resetBookFormDataAtom();
+      router.push("/book-review/result");
+      return;
+    }
+
     setCurrentStep(currentStep + 1);
     router.push(`/book-review/step-${currentStep + 1}`);
   }
@@ -96,7 +108,7 @@ export default function BookReviewStep1() {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           {renderStep()}
           <NavigationButton
-            showNextButton={[1, 2, 3, 4].includes(currentStep)}
+            showNextButton={[1, 2, 3, 4, 5].includes(currentStep)}
             showPrevButton={[2, 3, 4, 5].includes(currentStep)}
             onNextClick={handleNextClick}
             onPrevClick={handlePrevClick}

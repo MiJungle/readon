@@ -12,6 +12,7 @@ export interface BookFormData {
   review: string;
   quotes: { text: string; page: number }[];
   totalPages: string;
+  share: "public" | "follower" | "private" | "";
 }
 
 export const bookFormDataAtom = atomWithStorage<BookFormData>("bookFormData", {
@@ -26,4 +27,5 @@ export const bookFormDataAtom = atomWithStorage<BookFormData>("bookFormData", {
   review: "",
   quotes: [],
   totalPages: "",
+  share: "",
 });
