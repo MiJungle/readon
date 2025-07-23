@@ -71,3 +71,20 @@ export const TextArea = styled.textarea`
   font-size: 1rem;
   transition: border-color 0.2s;
 `;
+
+export const RadioGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const RadioInput = styled.input`
+  width: 1.5rem;
+  height: 1.5rem;
+`;
