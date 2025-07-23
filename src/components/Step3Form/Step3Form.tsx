@@ -36,7 +36,11 @@ export default function Step3Form() {
               message: "독후감을 작성해주시기 발바니다.",
             },
             minLength: {
-              value: 100,
+              value:
+                parseInt(bookFormData.rating) <= 1 ||
+                parseInt(bookFormData.rating) >= 5
+                  ? 100
+                  : 0,
               message: "최소 100자 이상을 작성해주시기 바랍니다",
             },
           }}
