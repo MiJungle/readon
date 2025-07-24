@@ -42,7 +42,7 @@ export default function BookReviewStep1({
       rating: "",
       review: "",
       quotes: [],
-      totalPages: "",
+      totalPages: 0,
       share: "",
     },
   });
