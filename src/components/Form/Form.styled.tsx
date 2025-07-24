@@ -88,3 +88,22 @@ export const RadioInput = styled.input`
   width: 1.5rem;
   height: 1.5rem;
 `;
+
+export const ContentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const FormWrapper = styled.div`
+  width: 50%;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+`;
+
+export const PreviewWrapper = styled.div`
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
+`;
