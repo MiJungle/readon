@@ -11,15 +11,25 @@ import { useAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { bookFormDataAtom, BookFormData } from "@/atoms/bookFormData";
 import { useForm, FormProvider } from "react-hook-form";
+import Preview from "@/components/Preview";
+import {
+  ContentsContainer,
+  FormWrapper,
+  PreviewWrapper,
+} from "@/components/Form/Form.styled";
 
-export default function BookReviewStep1() {
+export default function BookReviewStep1({
+  showPreview,
+}: {
+  showPreview: boolean;
+}) {
   const router = useRouter();
   const { step } = router.query;
   const initialStep = 1;
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [, setBookFormData] = useAtom(bookFormDataAtom);
   const resetBookFormDataAtom = useResetAtom(bookFormDataAtom);
-  
+
   const methods = useForm<BookFormData>({
     defaultValues: {
       title: "",
@@ -104,17 +114,23 @@ export default function BookReviewStep1() {
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
       />
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          {renderStep()}
-          <NavigationButton
-            showNextButton={[1, 2, 3, 4, 5].includes(currentStep)}
-            showPrevButton={[2, 3, 4, 5].includes(currentStep)}
-            onNextClick={handleNextClick}
-            onPrevClick={handlePrevClick}
-          />
-        </form>
-      </FormProvider>
+
+      <ContentsContainer>
+        <FormWrapper>
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+              {renderStep()}
+              <NavigationButton
+                showNextButton={[1, 2, 3, 4, 5].includes(currentStep)}
+                showPrevButton={[2, 3, 4, 5].includes(currentStep)}
+                onNextClick={handleNextClick}
+                onPrevClick={handlePrevClick}
+              />
+            </form>
+          </FormProvider>
+        </FormWrapper>
+        <PreviewWrapper>{showPreview && <Preview />}</PreviewWrapper>
+      </ContentsContainer>
     </div>
   );
 }
