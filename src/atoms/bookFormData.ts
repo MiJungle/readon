@@ -9,6 +9,9 @@ export interface BookFormData {
   publishDate: string;
   recommend: string;
   rating: string;
+  review: string;
+  quotes: { text: string; page: number }[];
+  totalPages: string;
 }
 
 export const bookFormDataAtom = atomWithStorage<BookFormData>("bookFormData", {
@@ -20,4 +23,7 @@ export const bookFormDataAtom = atomWithStorage<BookFormData>("bookFormData", {
   publishDate: "",
   recommend: "",
   rating: "",
+  review: "",
+  quotes: [],
+  totalPages: "",
 });

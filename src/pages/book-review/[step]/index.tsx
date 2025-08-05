@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import StepIndicator from "@/components/StepIndicator";
 import Step1Form from "@/components/Step1Form";
 import Step2Form from "@/components/Step2Form";
+import Step3Form from "@/components/Step3Form";
+import Step4Form from "@/components/Step4Form";
 import NavigationButton from "@/components/NavigationButton";
 import { useAtom } from "jotai";
 import { bookFormDataAtom, BookFormData } from "@/atoms/bookFormData";
@@ -25,6 +27,9 @@ export default function BookReviewStep1() {
       publishDate: "",
       recommend: "",
       rating: "",
+      review: "",
+      quotes: [],
+      totalPages: "",
     },
   });
 
@@ -41,10 +46,10 @@ export default function BookReviewStep1() {
         return <Step1Form />;
       case "step-2":
         return <Step2Form />;
-      // case "step-3":
-      //   return <Step3Form />;
-      // case "step-4":
-      //   return <Step4Form />;
+      case "step-3":
+        return <Step3Form />;
+      case "step-4":
+        return <Step4Form />;
       // case "step-5":
       //   return <Step5Form />;
       default:
@@ -55,6 +60,8 @@ export default function BookReviewStep1() {
   const stepFields: Record<number, (keyof BookFormData)[]> = {
     1: ["title", "author", "status", "startDate", "endDate", "publishDate"],
     2: ["recommend", "rating"],
+    3: ["review"],
+    4: ["quotes", "totalPages"],
   };
 
   async function handleNextClick() {
@@ -72,7 +79,7 @@ export default function BookReviewStep1() {
   }
 
   const onSubmit = (data: BookFormData) => {
-    setBookFormData(prev => ({
+    setBookFormData((prev) => ({
       ...prev,
       ...data,
     }));
