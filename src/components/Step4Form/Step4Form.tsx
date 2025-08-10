@@ -92,7 +92,7 @@ function QuoteFields({ control, errors }: QuoteFieldsProps) {
 
           {(fields.length > 1 || idx > 0) && (
             <RHFCommaSeparatedInput
-              name={`quotes.${idx}.page`}
+              name={`quotes.${idx}`}
               min={1}
               placeholder="페이지 번호"
               rules={{

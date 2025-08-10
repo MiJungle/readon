@@ -1,4 +1,5 @@
 export function addCommas(value: string) {
+  if(!value) return value;
   const numbersOnly = value.replace(/,/g, "");
   const cleanNumbers = numbersOnly.replace(/[^\d]/g, "");
   const withoutLeadingZeros = cleanNumbers.replace(/^0+/, "") || "0";

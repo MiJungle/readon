@@ -10,8 +10,8 @@ export interface BookFormData {
   recommend: string;
   rating: string;
   review: string;
-  quotes: { text: string; page: number }[];
-  totalPages: number;
+  quotes: { text: string; page: string }[];
+  totalPages: string;
   share: "public" | "follower" | "private" | "";
 }
 
