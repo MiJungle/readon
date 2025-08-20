@@ -10,6 +10,7 @@ import {
   Select,
   ErrorText,
 } from "../Form/Form.styled";
+import AutoComplete from "@/components/AutoComplete";
 
 export default function Step1Form() {
   const [bookFormData] = useAtom(bookFormDataAtom);
@@ -47,10 +48,12 @@ export default function Step1Form() {
             control={control}
             rules={{ required: "도서 제목을 입력해주세요" }}
             render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="도서 제목을 입력하세요"
-                className={errors.title ? "error" : ""}
+              <AutoComplete
+
+                value={field.value}
+                onChange={field.onChange}
+                // placeholder="도서 제목을 입력하세요"
+                // className={errors.title ? "error" : ""}
               />
             )}
           />
